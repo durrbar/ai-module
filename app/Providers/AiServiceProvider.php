@@ -4,6 +4,9 @@ namespace Modules\Ai\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Modules\Ai\Console\OpenAiSetupCommand;
+use Modules\Ai\Facades\Ai;
+use Modules\Settings\Models\Settings;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -36,6 +39,21 @@ class AiServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app->singleton('ai', function ($app) {
+            $active_ai = '';
+            $settings = Settings::first();
+
+            if (! empty(request()) && request()->has('artificial_intelligence')) {
+                $active_ai = ucfirst(strtolower(request()['artificial_intelligence']));
+            } else {
+                $active_ai = $settings->options['defaultAi'];
+            }
+
+            $ai = 'Modules\\Ai\\Ai\\'.ucfirst($active_ai);
+
+            return new Ai($app->make($ai));
+        });
     }
 
     /**
@@ -43,7 +61,9 @@ class AiServiceProvider extends ServiceProvider
      */
     protected function registerCommands(): void
     {
-        // $this->commands([]);
+        $this->commands([
+            OpenAiSetupCommand::class,
+        ]);
     }
 
     /**
@@ -86,8 +106,8 @@ class AiServiceProvider extends ServiceProvider
 
             foreach ($iterator as $file) {
                 if ($file->isFile() && $file->getExtension() === 'php') {
-                    $relativePath = str_replace($configPath . DIRECTORY_SEPARATOR, '', $file->getPathname());
-                    $configKey = $this->nameLower . '.' . str_replace([DIRECTORY_SEPARATOR, '.php'], ['.', ''], $relativePath);
+                    $relativePath = str_replace($configPath.DIRECTORY_SEPARATOR, '', $file->getPathname());
+                    $configKey = $this->nameLower.'.'.str_replace([DIRECTORY_SEPARATOR, '.php'], ['.', ''], $relativePath);
                     $key = ($relativePath === 'config.php') ? $this->nameLower : $configKey;
 
                     $this->publishes([$file->getPathname() => config_path($relativePath)], 'config');

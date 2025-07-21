@@ -14,6 +14,4 @@ use Modules\Ai\Http\Controllers\AiController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('ai', AiController::class)->names('ai');
-});
+Route::post('generate-descriptions', [AiController::class, 'generateDescription']);

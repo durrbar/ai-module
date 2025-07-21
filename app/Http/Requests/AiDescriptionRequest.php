@@ -1,13 +1,10 @@
 <?php
 
-
-namespace Modules\Ecommerce\Http\Requests;
+namespace Modules\Ai\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
-use Modules\Ecommerce\Enums\AiType;
 
 class AiDescriptionRequest extends FormRequest
 {
@@ -29,7 +26,7 @@ class AiDescriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'prompt'                  => ['string', 'required'],
+            'prompt' => ['string', 'required'],
         ];
     }
 

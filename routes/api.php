@@ -14,6 +14,6 @@ use Modules\Ai\Http\Controllers\AiController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+Route::middleware(['auth:sanctum'])->prefix('v1')->group(function (): void {
     Route::apiResource('ai', AiController::class)->names('ai');
 });
