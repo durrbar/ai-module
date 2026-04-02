@@ -1,13 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Ai\Enums;
 
-use BenSampo\Enum\Enum;
-
-/**
- * Class RoleType
- */
-final class AiType extends Enum
+enum AiType: string
 {
-    public const OPENAI = 'OPENAI';
-}
+    case Openai = 'OPENAI';}
