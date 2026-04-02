@@ -6,4 +6,5 @@ namespace Modules\Ai\Enums;
 
 enum AiType: string
 {
-    case Openai = 'OPENAI';}
+    case Openai = 'OPENAI';
+}

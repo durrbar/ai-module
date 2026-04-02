@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Ai\Facades;
 
 use Illuminate\Support\Facades\Facade;
