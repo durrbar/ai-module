@@ -9,7 +9,7 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Modules\Ecommerce\Traits\ENVSetupTrait;
+use Modules\Core\Traits\ENVSetupTrait;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\info;
